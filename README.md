@@ -2,7 +2,7 @@
 주어진 이미지를 흑백으로 처리, 필터를 씌운 후 
 HoughLine을 이용해 차선을 검출한다.
 
-## 1.이미지 출력
+## 1. 이미지 출력
 ```python
 img = mpimg.imread('1.jpg')
 
@@ -47,7 +47,7 @@ plt.show()
 ![4](https://user-images.githubusercontent.com/97824834/180408113-b93c83d2-5fae-415b-8b3a-cf1065596579.png)
 
 
-## 5.ROI(Region of Interest)
+## 5. ROI(Region of Interest)
 ```python
 imshape = img.shape
 vertices = np.array([[(0,imshape[0]),
@@ -63,7 +63,7 @@ plt.show()
 ![5](https://user-images.githubusercontent.com/97824834/180408163-a58929d5-fb6a-413f-ae6b-368cadbae62e.png)
 
 
-## 6.Houghline
+## 6. Houghline
 ```python
 rho = 3
 theta = np.pi/180
