@@ -76,7 +76,7 @@ lines = hough_lines(mask,rho,theta,threshold,min_line_len,max_line_gap)
 plt.figure(figsize=(10,8))
 plt.imshow(lines, cmap='gray')
 plt.show()
-```!
-[6](https://user-images.githubusercontent.com/97824834/180408184-a69c1093-bf9b-4623-a0e2-2af860b79bb4.png)
+```
+![6](https://user-images.githubusercontent.com/97824834/180408184-a69c1093-bf9b-4623-a0e2-2af860b79bb4.png)
 
 
