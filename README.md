@@ -31,7 +31,8 @@ blur_gray = gaussian_blur(gray,kernel_size)
 plt.figure(figsize=(10,8))
 plt.imshow(blur_gray, cmap='gray')
 plt.show()
-```![3](https://user-images.githubusercontent.com/97824834/180408076-cbfe3fdf-284d-4691-b85c-e113a5e8a514.png)
+```
+![3](https://user-images.githubusercontent.com/97824834/180408076-cbfe3fdf-284d-4691-b85c-e113a5e8a514.png)
 
 
 ## 4. Canny
