@@ -27,44 +27,56 @@ def region_of_interest(img, vertices):
     masked_image = cv2.bitwise_and(img,mask)
     return masked_image
 
-def draw_lines(img, lines, color=[255,0,0], thickness = 5):
+def draw_lines(img, lines, color=[255,0,0], thickness = 3):
+    line1 = lines[0]
+    line2 = lines[0]
     for line in lines:
-        for x1, y1, x2, y2 in line:
-            cv2.line(img, (x1,y1),(x2,y2),color,thickness)
+        for x1,y1,x2,y2 in line:
+            if line1[0][0] < x1 or line1[0][2] < x1:
+                line1 = line
+            if line2[0][0] > x1 or line2[0][2] > x1:
+                line2 = line
 
-def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
+    cv2.line(img,(line1[0][0],line1[0][1]),(line1[0][2],line1[0][3]),color,thickness)
+    cv2.line(img, (line2[0][0], line2[0][1]), (line2[0][2], line2[0][3]), color, thickness)
+
+
+def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap,origin):
     lines =     cv2.HoughLinesP(img, rho, theta, threshold,np.array([]),
                                 minLineLength = min_line_len,
                                 maxLineGap=max_line_gap)
-    line_img = np.zeros((img.shape[0], img.shape[1], 3), dtype=np.uint8)
-    draw_lines(line_img,lines)
-    return line_img
+    original = origin
+    ##line_img = np.zeros((img.shape[0], img.shape[1], 3), dtype=np.uint8)
+    draw_lines(original,lines)
+    return original
+
+
 
 img = mpimg.imread('1.jpg')
 
-plt.figure(figsize=(10,8))
-print('type',type(img),'dimensions',img.shape)
-plt.imshow(img)
-plt.show()
+# plt.figure(figsize=(10,8))
+# print('type',type(img),'dimensions',img.shape)
+# plt.imshow(img)
+# plt.show()
 
 gray = grayscale(img)
-plt.figure(figsize=(10,8))
-plt.imshow(gray,cmap='gray')
-plt.show()
+# plt.figure(figsize=(10,8))
+# plt.imshow(gray,cmap='gray')
+# plt.show()
 
 kernel_size = 5
 blur_gray = gaussian_blur(gray,kernel_size)
-plt.figure(figsize=(10,8))
-plt.imshow(blur_gray, cmap='gray')
-plt.show()
+# plt.figure(figsize=(10,8))
+# plt.imshow(blur_gray, cmap='gray')
+# plt.show()
 
 low_threshold = 50
 high_threshold = 200
 edges = canny(blur_gray, low_threshold, high_threshold)
 
-plt.figure(figsize=(10,8))
-plt.imshow(edges, cmap='gray')
-plt.show()
+# plt.figure(figsize=(10,8))
+# plt.imshow(edges, cmap='gray')
+# plt.show()
 
 imshape = img.shape
 vertices = np.array([[(0,imshape[0]),
@@ -73,17 +85,17 @@ vertices = np.array([[(0,imshape[0]),
                       (imshape[1]-100,imshape[0])]], dtype=np.int32)
 mask = region_of_interest(edges,vertices)
 
-plt.figure(figsize=(10,8))
-plt.imshow(mask, cmap='gray')
-plt.show()
+# plt.figure(figsize=(10,8))
+# plt.imshow(mask, cmap='gray')
+# plt.show()
 
-rho = 3
+rho = 1
 theta = np.pi/180
 threshold = 10
 min_line_len = 100
 max_line_gap = 50
 
-lines = hough_lines(mask,rho,theta,threshold,min_line_len,max_line_gap)
+lines = hough_lines(mask,rho,theta,threshold,min_line_len,max_line_gap,img)
 
 plt.figure(figsize=(10,8))
 plt.imshow(lines, cmap='gray')
